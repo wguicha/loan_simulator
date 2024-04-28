@@ -6,6 +6,8 @@ import { useState } from 'react';
 
 export const DataContainer = () => {
     const [ plazo, setPlazo ] = useState('')
+    const [ tasaMensual, setTasaMensual ] = useState('')
+    const [ valorInicial, setValorInicial ] = useState('')
     return (
         <Box
             sx={{
@@ -23,14 +25,16 @@ export const DataContainer = () => {
                     alignItems="center">
                 <Grid item xs={6} sm={2}>
                 <TextField label='Plazo'
+                        id='plazo'
                         required
                         value={plazo}
+                        type='number'
                         onChange={(e) => setPlazo(e.target.value)}
                         error={!plazo}
                         helperText={
                             !plazo? 'required' : 'Ingrese la cantidad de meses'
                         }
-                        size='small'
+                        size='large'
                         color='secondary'
                         InputProps={{
                             endAdornment: <InputAdornment position='end'>meses</InputAdornment>
@@ -38,8 +42,40 @@ export const DataContainer = () => {
                 </TextField>
                 </Grid>
                 <Grid item xs={6} sm={2}>
-                 </Grid>
+                <TextField label='Tasa Mensual'
+                        id='tasaMensual'
+                        required
+                        value={tasaMensual}
+                        type='number'
+                        onChange={(e) => setTasaMensual(e.target.value)}
+                        error={!tasaMensual}
+                        helperText={
+                            !tasaMensual? 'required' : 'Ingrese la cantidad de meses'
+                        }
+                        size='large'
+                        color='secondary'
+                        InputProps={{
+                            endAdornment: <InputAdornment position='end'>meses</InputAdornment>
+                        }}>
+                </TextField>
+                </Grid>
                 <Grid item xs={12} sm={6}>
+                <TextField label='Valor Inicial'
+                        id='valorInicial'
+                        required
+                        value={valorInicial}
+                        type='number'
+                        onChange={(e) => setValorInicial(e.target.value)}
+                        error={!valorInicial}
+                        helperText={
+                            !valorInicial? 'required' : 'Ingrese la cantidad de meses'
+                        }
+                        size='large'
+                        color='secondary'
+                        InputProps={{
+                            endAdornment: <InputAdornment position='end'>meses</InputAdornment>
+                        }}>
+                </TextField>
                 </Grid>
             </Grid>
         </Box>
