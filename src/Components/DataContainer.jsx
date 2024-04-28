@@ -1,7 +1,11 @@
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import Box from '@mui/system/Box';
+import Grid from '@mui/material/Grid';
+import InputAdornment from '@mui/material/InputAdornment';
+import { TextField } from '@mui/material';
+import { useState } from 'react';
 
 export const DataContainer = () => {
+    const [ plazo, setPlazo ] = useState('')
     return (
         <Box
             sx={{
@@ -13,30 +17,31 @@ export const DataContainer = () => {
                 borderRadius: 2,
             }}
         >
-            <Box sx={{ color: 'text.secondary' }}>Sessions</Box>
-            <Box
-                sx={{ color: 'text.primary', fontSize: '2.125rem', fontWeight: 'medium' }}
-            >
-                98.3 K
-            </Box>
-            <Box
-                component={TrendingUpIcon}
-                sx={{ color: 'success.dark', fontSize: '1rem', verticalAlign: 'sub' }}
-            />
-            <Box
-                sx={{
-                    display: 'inline',
-                    fontSize: '0.875rem',
-                    fontWeight: 'bold',
-                    color: 'success.dark',
-                    mx: 0.5,
-                }}
-            >
-                18.7%
-            </Box>
-            <Box sx={{ color: 'text.secondary', display: 'inline', fontSize: '0.875rem' }}>
-                vs. last week
-            </Box>
+            <Grid container my={2}
+                    direction="row"
+                    justifyContent="space-evenly"
+                    alignItems="center">
+                <Grid item xs={6} sm={2}>
+                <TextField label='Plazo'
+                        required
+                        value={plazo}
+                        onChange={(e) => setPlazo(e.target.value)}
+                        error={!plazo}
+                        helperText={
+                            !plazo? 'required' : 'Ingrese la cantidad de meses'
+                        }
+                        size='small'
+                        color='secondary'
+                        InputProps={{
+                            endAdornment: <InputAdornment position='end'>meses</InputAdornment>
+                        }}>
+                </TextField>
+                </Grid>
+                <Grid item xs={6} sm={2}>
+                 </Grid>
+                <Grid item xs={12} sm={6}>
+                </Grid>
+            </Grid>
         </Box>
 
     )

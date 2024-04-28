@@ -2,7 +2,7 @@ import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper
 
 export const LoanTable = () => {
     return (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} >
             <Table aira-label='loan calculation table'>
                 <TableHead>
                     <TableRow>
