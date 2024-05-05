@@ -1,38 +1,47 @@
 const loanTable = () =>{
-    const plazo = 60;
-    const tasaMensual = 1.1;
-    const valorInicial = 40000;
-    const tablaAmortizacion=[];
-    let valorInicialPer = valorInicial
+    const termLength = 60;
+    const interestRate = 1.1;
+    const loanAmount = 40000;
+    const amortizationTable=[];
+    const addPayment={5 : 300, 10 : 300 }
+    let addPaymentInPeriod = 0
+    let intialValuePeriod = loanAmount
 
-    let monthlyPay = monthlyPayment(plazo, tasaMensual, valorInicial);
+    let monthlyPay = monthlyPayment(termLength, interestRate, loanAmount);
 
     console.log('Pago Mensual: ', monthlyPay)
 
-    for (let i = 1; i <= plazo; i++){
-        tablaAmortizacion.push(
+    for (let i = 1; i <= termLength; i++){
+        if(addPayment[i]){
+            addPaymentInPeriod = addPayment[i]
+        } else {
+            addPaymentInPeriod = 0
+        }
+        amortizationTable.push(
             {
                 periodo : i,
-                vInicial : valorInicialPer,
-                interesMes : Math.round(valorInicialPer * tasaMensual) / 100,
-                capital : Math.round((monthlyPay - (Math.round(valorInicialPer * tasaMensual) / 100)) * 100) / 100,
-                vFinal : Math.round((valorInicialPer - (Math.round((monthlyPay - (Math.round(valorInicialPer * tasaMensual) / 100)) * 100) / 100)) * 100) / 100
+                vInicial : intialValuePeriod,
+                interesMes : Math.round(intialValuePeriod * interestRate) / 100,
+                capital : Math.round((monthlyPay - (Math.round(intialValuePeriod * interestRate) / 100)) * 100) / 100,
+                vFinal : Math.round((intialValuePeriod - (Math.round((monthlyPay - (Math.round(intialValuePeriod * interestRate) / 100)) * 100) / 100)) * 100) / 100,
+                addPaymentInPeriod : addPaymentInPeriod,
+                newVFinal : Math.round((intialValuePeriod - (Math.round((monthlyPay - (Math.round(intialValuePeriod * interestRate) / 100)) * 100) / 100)) * 100) / 100 - addPaymentInPeriod
             }
         )
 
-        valorInicialPer = Math.round((valorInicialPer - (Math.round((monthlyPay - (Math.round(valorInicialPer * tasaMensual) / 100)) * 100) / 100)) * 100) / 100
+        intialValuePeriod = Math.round((intialValuePeriod - (Math.round((monthlyPay - (Math.round(intialValuePeriod * interestRate) / 100)) * 100) / 100)) * 100) / 100 - addPaymentInPeriod;
 
     }
 
-    console.log(tablaAmortizacion)
+    console.log(amortizationTable)
 
-    return tablaAmortizacion;
+    return amortizationTable;
 
 }
 
-const monthlyPayment = (plazo, tasaMensual, valorInicial) => {
+const monthlyPayment = (termLength, interestRate, loanAmount) => {
 
-    return Math.round(((valorInicial * (tasaMensual/100))/(1 - Math.pow((1 + (tasaMensual/100)),(-plazo))))*100) / 100;
+    return Math.round(((loanAmount * (interestRate/100))/(1 - Math.pow((1 + (interestRate/100)),(-termLength))))*100) / 100;
 
 }
 
