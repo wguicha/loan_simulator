@@ -9,6 +9,8 @@ interface Payment {
     balance: number;
     altInterest?: number;
     altPayment?: number;
+    altPrincipal?: number;
+    altBalance?: number;
 }
 
 interface LoanState {

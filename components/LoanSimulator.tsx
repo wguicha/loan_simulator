@@ -1,18 +1,23 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useLoanCalculator } from './useLoanCalculator'; // Importamos el custom hook
-import styles from './LoanSimulator.module.css'; // Importamos los estilos
+import { useTranslation } from 'react-i18next';
+import { useLoanCalculator } from './useLoanCalculator';
+import styles from './LoanSimulator.module.css';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setPayments } from '@/store/loanSlice';
 import { RootState } from '@/store';
+
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const LoanSimulator: React.FC = () => {
     const [amount, setAmount] = useState<number>(0);
     const [interestRate, setInterestRate] = useState<number>(0);
     const [term, setTerm] = useState<number>(0);
     const [addPercentajePayment, setAddPercentajePayment] = useState<number>(0);
+
+    const { t } = useTranslation();
 
     const dispatch = useDispatch();
     const totalInterest = useSelector((state: RootState) => state.loan.totalInterest);
@@ -21,21 +26,39 @@ const LoanSimulator: React.FC = () => {
     const totalAltPayment = useSelector((state: RootState) => state.loan.totalAltPayment);
     const payments = useSelector((state: RootState) => state.loan.payments);
 
-    // Usamos el hook para acceder a la lógica
     const { calculatePayments, exportToExcel } = useLoanCalculator();
 
     const handleCalculatePayments = () => {
         const calculatedPayments = calculatePayments(amount, interestRate, term, addPercentajePayment);
-        console.log(calculatedPayments)
+        console.log(payments)
         dispatch(setPayments(calculatedPayments)); // Despacha el array de pagos calculados
     };
 
+    const renderAdditionalColumns = () => (
+        <>
+            <th className={styles.th}>{t('newPayment')}</th>
+            <th className={styles.th}>{t('newInterest')}</th>
+            <th className={styles.th}>{t('newPrincipal')}</th>
+            <th className={styles.th}>{t('newBalance')}</th>
+        </>
+    );
+
+    const renderAdditionalCells = (payment: any) => (
+        <>
+            <td className={styles.td}>{payment.altPayment?.toFixed(2) || 0}</td>
+            <td className={styles.td}>{payment.altInterest?.toFixed(2) || 0}</td>
+            <td className={styles.td}>{payment.altPrincipal?.toFixed(2) || 0}</td>
+            <td className={styles.td}>{payment.altBalance?.toFixed(2) || 0}</td>
+        </>
+    );
+
     return (
         <div className={styles.container}>
-            <h1 className={styles.title}>Loan Simulator</h1>
+            <LanguageSwitcher />
+            <h1 className={styles.title}>{t('loanSimulator')}</h1>
 
             <div>
-                <label className={styles.label}>Loan Amount:</label>
+                <label className={styles.label}>{t('loanAmount')}:</label>
                 <input
                     type="number"
                     value={amount}
@@ -45,7 +68,7 @@ const LoanSimulator: React.FC = () => {
             </div>
 
             <div>
-                <label className={styles.label}>Annual Interest Rate (%):</label>
+                <label className={styles.label}>{t('interestRate')}:</label>
                 <input
                     type="number"
                     value={interestRate}
@@ -55,7 +78,7 @@ const LoanSimulator: React.FC = () => {
             </div>
 
             <div>
-                <label className={styles.label}>Term (months):</label>
+                <label className={styles.label}>{t('termMonths')}:</label>
                 <input
                     type="number"
                     value={term}
@@ -64,7 +87,7 @@ const LoanSimulator: React.FC = () => {
                 />
             </div>
             <div>
-                <label className={styles.label}>Additional Payment (%):</label>
+                <label className={styles.label}>{t('additionalPayment')}:</label>
                 <input
                     type="number"
                     value={addPercentajePayment}
@@ -83,6 +106,9 @@ const LoanSimulator: React.FC = () => {
             {totalAltInterest > 0 && (
                 <h2>New Total Interest: {totalAltInterest.toFixed(2)} New Total Payment: {totalAltPayment.toFixed(2)}</h2>
             )}
+
+            <button onClick={exportToExcel} className={styles.exportButton}>Export to Excel</button>
+
             {payments.length > 0 && (
                 <>
                     <div className={styles.tableContainer}>
@@ -95,10 +121,7 @@ const LoanSimulator: React.FC = () => {
                                     <th className={styles.th}>Principal</th>
                                     <th className={styles.th}>Interest</th>
                                     <th className={styles.th}>Balance</th>
-                                    {/* Mostrar la columna solo si addPercentajePayment > 0 */}
-                                    {addPercentajePayment > 0 && (
-                                        <th className={styles.th}>Alt Interest</th>
-                                    )}
+                                    {addPercentajePayment > 0 && renderAdditionalColumns()}
                                 </tr>
                             </thead>
                             <tbody>
@@ -109,16 +132,12 @@ const LoanSimulator: React.FC = () => {
                                         <td className={styles.td}>{payment.principal.toFixed(2)}</td>
                                         <td className={styles.td}>{payment.interest.toFixed(2)}</td>
                                         <td className={styles.td}>{payment.balance.toFixed(2)}</td>
-                                        {/* Mostrar la celda solo si addPercentajePayment > 0 */}
-                                        {addPercentajePayment > 0 && (
-                                            <td className={styles.td}>{payment.altInterest?.toFixed(2) || 0}</td>
-                                        )}
+                                        {addPercentajePayment > 0 && renderAdditionalCells(payment)}
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                     </div>
-                    <button onClick={exportToExcel} className={styles.exportButton}>Export to Excel</button>
                 </>
             )}
         </div>
