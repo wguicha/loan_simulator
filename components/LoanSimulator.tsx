@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import HorizontalBarChart from './HorizontalBarChart';
 import { useLoanCalculator } from './useLoanCalculator';
 import styles from './LoanSimulator.module.css';
 
@@ -30,7 +31,7 @@ const LoanSimulator: React.FC = () => {
 
     const handleCalculatePayments = () => {
         const calculatedPayments = calculatePayments(amount, interestRate, term, addPercentajePayment);
-        console.log(payments)
+        console.log(calculatedPayments);
         dispatch(setPayments(calculatedPayments)); // Despacha el array de pagos calculados
     };
 
@@ -97,14 +98,17 @@ const LoanSimulator: React.FC = () => {
             </div>
 
             <button onClick={handleCalculatePayments} className={styles.button}>
-                Calculate Payments
+                {t('calculatePayments')}
             </button>
 
             {totalInterest > 0 && (
                 <h2>Total Interest: {totalInterest.toFixed(2)} Total Payment: {totalPayment.toFixed(2)}</h2>
             )}
             {totalAltInterest > 0 && (
-                <h2>New Total Interest: {totalAltInterest.toFixed(2)} New Total Payment: {totalAltPayment.toFixed(2)}</h2>
+                <>
+                    <h2>New Total Interest: {totalAltInterest.toFixed(2)} New Total Payment: {totalAltPayment.toFixed(2)}</h2>
+                    <HorizontalBarChart totalPayment={totalPayment} newTotalPayment={totalAltPayment} />
+                </>
             )}
 
             <button onClick={exportToExcel} className={styles.exportButton}>Export to Excel</button>
