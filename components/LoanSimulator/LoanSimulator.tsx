@@ -11,6 +11,7 @@ import { RootState } from '@/store';
 
 import LanguageSwitcher from "@/components/LanguageSwitcher/LanguageSwitcher";
 import HorizontalBarChart from '../HorizontalBarChart/HorizontalBarChart';
+import BalanceLineChart from '../BalanceLineChart/BalanceLineChart';
 
 const LoanSimulator: React.FC = () => {
     const [amount, setAmount] = useState<string>('');
@@ -57,6 +58,13 @@ const LoanSimulator: React.FC = () => {
         </>
     );
 
+    const balanceData = payments.map(payment => ({
+        month: payment.month,
+        balance: payment.balance,
+        altBalance: payment.altBalance ?? 0
+    }));
+
+    //<HorizontalBarChart totalPayment={totalPayment} newTotalPayment={totalAltPayment} />
     return (
         <div className={styles.container}>
             <LanguageSwitcher />
@@ -118,7 +126,7 @@ const LoanSimulator: React.FC = () => {
                 </div>
 
                 <div className={styles.half}>
-                    <HorizontalBarChart totalPayment={totalPayment} newTotalPayment={totalAltPayment} />
+                    <BalanceLineChart data={balanceData} />
                 </div>
             </div>
 
