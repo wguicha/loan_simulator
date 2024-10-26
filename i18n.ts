@@ -6,74 +6,68 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 const resources = {
     en: {
         translation: {
-            "loanAmount": "Loan Amount",
-            "interestRate": "Annual Interest Rate (%)",
-            "termMonths": "Term (months)",
-            "additionalPayment": "Additional Payment (%)",
-            "calculatePayments": "Calculate Payments",
-            "totalPayment": "Total Payment",
-            "newTotalPayment": "New Total Payment",
-            "totalInterest": "Total Interest",
-            "newTotalInterest": "New Total Interest",
-            "paymentSchedule": "Payment Schedule",
-            "month": "Month",
-            "payment": "Payment",
-            "principal": "Principal",
-            "interest": "Interest",
+            "addPercentajePayment": "Additional Percentage Payment",
             "balance": "Balance",
+            "balanceOverTime": "Balance Over Time",
+            "calculate": "Calculate",
+            "exportToExcel": "Export to Excel",
+            "interest": "Interest",
+            "interestRate": "Interest Rate",
+            "loanAmount": "Loan Amount",
+            "loanSimulator": "Loan Simulator",
+            "month": "Month",
+            "newBalance": "New Balance",
+            "newInterest": "New Interest",
             "newPayment": "New Payment",
             "newPrincipal": "New Principal",
-            "newInterest": "New Interest",
-            "newBalance": "New Balance",
-            "loanSimulator": "Loan Simulator"
+            "payment": "Payment",
+            "paymentSchedule": "Payment Schedule",
+            "principal": "Principal",
+            "term": "Term"
         }
     },
     es: {
         translation: {
-            "loanAmount": "Monto del Préstamo",
-            "interestRate": "Tasa de Interés Anual (%)",
-            "termMonths": "Plazo (meses)",
-            "additionalPayment": "Pago Adicional (%)",
-            "calculatePayments": "Calcular Pagos",
-            "totalPayment": "Pago Total",
-            "newTotalPayment": "Nuevo Pago Total",
-            "totalInterest": "Interés Total",
-            "newTotalInterest": "Nuevo Interés Total",
-            "paymentSchedule": "Calendario de Pagos",
-            "month": "Mes",
-            "payment": "Pago",
-            "principal": "Capital",
-            "interest": "Interés",
+            "addPercentajePayment": "Pago Adicional en Porcentaje",
             "balance": "Saldo",
-            "newPayment": "Nuevo Pago",
-            "newPrincipal": "Nuevo Capital",
-            "newInterest": "Nuevo Interés",
+            "balanceOverTime": "Saldo a lo Largo del Tiempo",
+            "calculate": "Calcular",
+            "exportToExcel": "Exportar a Excel",
+            "interest": "Interés",
+            "interestRate": "Tasa de Interés",
+            "loanAmount": "Monto del Préstamo",
+            "loanSimulator": "Simulador de Préstamos",
+            "month": "Mes",
             "newBalance": "Nuevo Saldo",
-            "loanSimulator": "Simulador de Préstamo"
+            "newInterest": "Nuevo Interés",
+            "newPayment": "Nuevo Pago",
+            "newPrincipal": "Nuevo Principal",
+            "payment": "Pago",
+            "paymentSchedule": "Calendario de Pagos",
+            "principal": "Principal",
+            "term": "Plazo"
         }
     },
     pt: {
         translation: {
-            "loanAmount": "Montante do Empréstimo",
-            "interestRate": "Taxa de Juros Anual (%)",
-            "termMonths": "Prazo (meses)",
-            "additionalPayment": "Pagamento Adicional (%)",
-            "calculatePayments": "Calcular Pagamentos",
-            "totalPayment": "Pagamento Totais",
-            "newTotalPayment": "Novo Pagamento Totais",
-            "totalInterest": "Juros Totais",
-            "newTotalInterest": "Novos Juros Totais",
-            "paymentSchedule": "Calendário de Pagamentos",
-            "month": "Mês",
-            "payment": "Pagamento",
-            "principal": "Principal",
-            "interest": "Juros",
+            "addPercentajePayment": "Pagamento Adicional em Percentagem",
             "balance": "Saldo",
+            "balanceOverTime": "Saldo ao Longo do Tempo",
+            "calculate": "Calcular",
+            "exportToExcel": "Exportar para Excel",
+            "interest": "Juros",
+            "interestRate": "Taxa de Juros",
+            "loanAmount": "Montante do Empréstimo",
+            "loanSimulator": "Simulador de Empréstimos",
+            "month": "Mês",
+            "newBalance": "Novo Saldo",
+            "newInterest": "Novo Juros",
             "newPayment": "Novo Pagamento",
             "newPrincipal": "Novo Principal",
-            "newInterest": "Novo Juros",
-            "newBalance": "Novo Saldo",
-            "loanSimulator": "Simulador do Empréstimo"
+            "payment": "Pagamento",
+            "paymentSchedule": "Calendário de Pagamentos",
+            "principal": "Principal",
+            "term": "Prazo"
         }
     }
 };
@@ -87,8 +81,8 @@ i18n
         fallbackLng: 'en',
         debug: true,
         interpolation: {
-            escapeValue: false, // React ya escapa valores por defecto
-        },
+            escapeValue: false
+        }
     });
 
 export default i18n;

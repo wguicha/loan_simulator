@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLoanCalculator } from '@/hooks/useLoanCalculator';
 import styles from './LoanSimulator.module.css';
+import { NumericFormat } from 'react-number-format';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setPayments } from '@/store/loanSlice';
@@ -51,10 +52,46 @@ const LoanSimulator: React.FC = () => {
 
     const renderAdditionalCells = (payment: any) => (
         <>
-            <td className={styles.td}>{payment.altPayment ? payment.altPayment.toFixed(2) : '0.00'}</td>
-            <td className={styles.td}>{payment.altInterest ? payment.altInterest.toFixed(2) : '0.00'}</td>
-            <td className={styles.td}>{payment.altPrincipal ? payment.altPrincipal.toFixed(2) : '0.00'}</td>
-            <td className={styles.td}>{payment.altBalance ? payment.altBalance.toFixed(2) : '0.00'}</td>
+            <td className={styles.td}>
+                <NumericFormat
+                    value={payment.altPayment}
+                    displayType={'text'}
+                    thousandSeparator={true}
+                    prefix={'$ '}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                />
+            </td>
+            <td className={styles.td}>
+                <NumericFormat
+                    value={payment.altInterest}
+                    displayType={'text'}
+                    thousandSeparator={true}
+                    prefix={'$ '}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                />
+            </td>
+            <td className={styles.td}>
+                <NumericFormat
+                    value={payment.altPrincipal}
+                    displayType={'text'}
+                    thousandSeparator={true}
+                    prefix={'$ '}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                />
+            </td>
+            <td className={styles.td}>
+                <NumericFormat
+                    value={payment.altBalance}
+                    displayType={'text'}
+                    thousandSeparator={true}
+                    prefix={'$ '}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                />
+            </td>
         </>
     );
 
@@ -64,35 +101,39 @@ const LoanSimulator: React.FC = () => {
         altBalance: payment.altBalance ?? 0
     }));
 
-    //<HorizontalBarChart totalPayment={totalPayment} newTotalPayment={totalAltPayment} />
     return (
         <div className={styles.container}>
-            <LanguageSwitcher />
-            <h1 className={styles.title} suppressHydrationWarning>{t('loanSimulator')}</h1>
+            <div className={styles.header}>
+                <h1 className={styles.title} suppressHydrationWarning>{t('loanSimulator')}</h1>
+                <LanguageSwitcher />
+            </div>
 
             <div className={styles.topContainer}>
                 <div className={styles.half}>
                     <div>
                         <label htmlFor="loanAmount" className={styles.label}>{t('loanAmount')}:</label>
-                        <input
+                        <NumericFormat
                             id="loanAmount"
-                            type="number"
                             value={amount}
-                            onChange={(e) => setAmount(e.target.value)}
+                            onValueChange={(values) => setAmount(values.value)}
                             className={styles.input}
                             placeholder="0"
+                            thousandSeparator={true}
+                            prefix={'$ '}
                         />
                     </div>
 
                     <div>
                         <label htmlFor="interestRate" className={styles.label}>{t('interestRate')}:</label>
-                        <input
+                        <NumericFormat
                             id="interestRate"
-                            type="number"
                             value={interestRate}
-                            onChange={(e) => setInterestRate(e.target.value)}
+                            onValueChange={(values) => setInterestRate(values.value)}
                             className={styles.input}
                             placeholder="0"
+                            decimalScale={2}
+                            suffix="%"
+                            fixedDecimalScale={true}
                         />
                     </div>
 
@@ -110,13 +151,15 @@ const LoanSimulator: React.FC = () => {
 
                     <div>
                         <label htmlFor="addPercentajePayment" className={styles.label}>{t('addPercentajePayment')}:</label>
-                        <input
+                        <NumericFormat
                             id="addPercentajePayment"
-                            type="number"
                             value={addPercentajePayment}
-                            onChange={(e) => setAddPercentajePayment(e.target.value)}
+                            onValueChange={(values) => setAddPercentajePayment(values.value)}
                             className={styles.input}
                             placeholder="0"
+                            decimalScale={2}
+                            suffix="%"
+                            fixedDecimalScale={true}
                         />
                     </div>
 
@@ -131,44 +174,83 @@ const LoanSimulator: React.FC = () => {
             </div>
 
             {totalInterest > 0 && (
-                <h2>Total Interest: {totalInterest.toFixed(2)} Total Payment: {totalPayment.toFixed(2)}</h2>
+                <h2>{t('totalInterest')}: {totalInterest.toFixed(2)} {t('totalPayment')}: {totalPayment.toFixed(2)}</h2>
             )}
             {totalAltInterest > 0 && (
-                <h2>New Total Interest: {totalAltInterest.toFixed(2)} New Total Payment: {totalAltPayment.toFixed(2)}</h2>
+                <>
+                    <h2>{t('newTotalInterest')}: {totalAltInterest.toFixed(2)} {t('newTotalPayment')}: {totalAltPayment.toFixed(2)}</h2>
+                </>
             )}
 
-            <button className={styles.exportButton} onClick={exportToExcel}>
-                {t('exportToExcel')}
-            </button>
-
             {payments.length > 0 && (
-                <div className={styles.tableContainer}>
-                    <h2>Payment Schedule</h2>
-                    <table className={styles.table}>
-                        <thead>
-                            <tr>
-                                <th className={styles.th}>Month</th>
-                                <th className={styles.th}>Payment</th>
-                                <th className={styles.th}>Principal</th>
-                                <th className={styles.th}>Interest</th>
-                                <th className={styles.th}>Balance</th>
-                                {parseFloat(addPercentajePayment) > 0 && renderAdditionalColumns()}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {payments.map((payment, index) => (
-                                <tr key={payment.month} className={index % 2 === 0 ? styles.evenRow : ''}>
-                                    <td className={styles.td}>{payment.month}</td>
-                                    <td className={styles.td}>{payment.payment.toFixed(2)}</td>
-                                    <td className={styles.td}>{payment.principal.toFixed(2)}</td>
-                                    <td className={styles.td}>{payment.interest.toFixed(2)}</td>
-                                    <td className={styles.td}>{payment.balance.toFixed(2)}</td>
-                                    {parseFloat(addPercentajePayment) > 0 && renderAdditionalCells(payment)}
+                <>
+                    <button className={styles.exportButton} onClick={exportToExcel}>
+                        {t('exportToExcel')}
+                    </button>
+                    <div className={styles.tableContainer}>
+                        <h2>{t('paymentSchedule')}</h2>
+                        <table className={styles.table}>
+                            <thead>
+                                <tr>
+                                    <th className={styles.th}>{t('month')}</th>
+                                    <th className={styles.th}>{t('payment')}</th>
+                                    <th className={styles.th}>{t('principal')}</th>
+                                    <th className={styles.th}>{t('interest')}</th>
+                                    <th className={styles.th}>{t('balance')}</th>
+                                    {parseFloat(addPercentajePayment) > 0 && renderAdditionalColumns()}
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                                {payments.map((payment, index) => (
+                                    <tr key={payment.month} className={index % 2 === 0 ? styles.evenRow : ''}>
+                                        <td className={styles.td}>{payment.month}</td>
+                                        <td className={styles.td}>
+                                            <NumericFormat
+                                                value={payment.payment}
+                                                displayType={'text'}
+                                                thousandSeparator={true}
+                                                prefix={'$ '}
+                                                decimalScale={2}
+                                                fixedDecimalScale={true}
+                                            />
+                                        </td>
+                                        <td className={styles.td}>
+                                            <NumericFormat
+                                                value={payment.principal}
+                                                displayType={'text'}
+                                                thousandSeparator={true}
+                                                prefix={'$ '}
+                                                decimalScale={2}
+                                                fixedDecimalScale={true}
+                                            />
+                                        </td>
+                                        <td className={styles.td}>
+                                            <NumericFormat
+                                                value={payment.interest}
+                                                displayType={'text'}
+                                                thousandSeparator={true}
+                                                prefix={'$ '}
+                                                decimalScale={2}
+                                                fixedDecimalScale={true}
+                                            />
+                                        </td>
+                                        <td className={styles.td}>
+                                            <NumericFormat
+                                                value={payment.balance}
+                                                displayType={'text'}
+                                                thousandSeparator={true}
+                                                prefix={'$ '}
+                                                decimalScale={2}
+                                                fixedDecimalScale={true}
+                                            />
+                                        </td>
+                                        {parseFloat(addPercentajePayment) > 0 && renderAdditionalCells(payment)}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </>
             )}
         </div>
     );
