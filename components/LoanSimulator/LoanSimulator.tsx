@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLoanCalculator } from '@/hooks/useLoanCalculator';
+import useExportToExcel from '@/hooks/useExportToExcel';
 import styles from './LoanSimulator.module.css';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -22,6 +23,7 @@ const LoanSimulator: React.FC = () => {
     const [addPercentajePayment, setAddPercentajePayment] = useState<string>('');
 
     const { t } = useTranslation();
+    const { exportToExcel } = useExportToExcel();
 
     const dispatch = useDispatch();
     const totalInterest = useSelector((state: RootState) => state.loan.totalInterest);
@@ -30,7 +32,7 @@ const LoanSimulator: React.FC = () => {
     const totalAltPayment = useSelector((state: RootState) => state.loan.totalAltPayment);
     const payments = useSelector((state: RootState) => state.loan.payments);
 
-    const { calculatePayments, exportToExcel } = useLoanCalculator();
+    const { calculatePayments } = useLoanCalculator();
 
     const handleCalculate = () => {
         const amountNumber = parseFloat(amount) || 0;
@@ -62,6 +64,7 @@ const LoanSimulator: React.FC = () => {
                         placeholder="0"
                         thousandSeparator={true}
                         prefix={'$ '}
+                        tooltip={t('loanAmountTooltip')} // Texto explicativo
                     />
                     <InputField
                         id="interestRate"
@@ -72,6 +75,7 @@ const LoanSimulator: React.FC = () => {
                         decimalScale={2}
                         suffix="%"
                         fixedDecimalScale={true}
+                        tooltip={t('interestRateTooltip')} // Texto explicativo
                     />
                     <InputField
                         id="term"
@@ -79,6 +83,7 @@ const LoanSimulator: React.FC = () => {
                         value={term}
                         onValueChange={(values) => setTerm(values.value)}
                         placeholder="0"
+                        tooltip={t('termTooltip')} // Texto explicativo
                     />
                     <InputField
                         id="addPercentajePayment"
@@ -89,6 +94,7 @@ const LoanSimulator: React.FC = () => {
                         decimalScale={2}
                         suffix="%"
                         fixedDecimalScale={true}
+                        tooltip={t('addPercentajePaymentTooltip')} // Texto explicativo
                     />
                     <button className={styles.button} onClick={handleCalculate}>
                         {t('calculate')}
@@ -111,7 +117,7 @@ const LoanSimulator: React.FC = () => {
 
             {payments.length > 0 && (
                 <>
-                    <button className={styles.exportButton} onClick={exportToExcel}>
+                    <button className={styles.exportButton} onClick={() => exportToExcel(payments, addPercentajePayment)}>
                         {t('exportToExcel')}
                     </button>
                     <ResultsTable

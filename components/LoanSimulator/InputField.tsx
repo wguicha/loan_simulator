@@ -13,6 +13,7 @@ interface InputFieldProps {
     suffix?: string;
     decimalScale?: number;
     fixedDecimalScale?: boolean;
+    tooltip?: string; // Nueva propiedad para el texto explicativo
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -25,11 +26,15 @@ const InputField: React.FC<InputFieldProps> = ({
     prefix = '',
     suffix = '',
     decimalScale,
-    fixedDecimalScale = false
+    fixedDecimalScale = false,
+    tooltip = '' // Nueva propiedad para el texto explicativo
 }) => {
     return (
-        <div>
-            <label htmlFor={id} className={styles.label}>{label}:</label>
+        <div className={styles.inputContainer}>
+            <label htmlFor={id} className={styles.label}>
+                {label}
+                {tooltip && <span className={styles.tooltip}>{tooltip}</span>}
+            </label>
             <NumericFormat
                 id={id}
                 value={value}
