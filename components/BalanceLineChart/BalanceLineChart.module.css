@@ -1,0 +1,47 @@
+.savingsIndicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f0f4f8;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.savingsLabel {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #FF5733;
+}
+
+.savingsValue {
+    font-size: 2em;
+    font-weight: bold;
+    color: #33FF57;
+}
+
+.termIndicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f0f4f8;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.termLabel {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #FF5733;
+}
+
+.termValue {
+    font-size: 2em;
+    font-weight: bold;
+    color: #33FF57;
+}

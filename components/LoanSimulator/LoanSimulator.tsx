@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLoanCalculator } from '@/hooks/useLoanCalculator';
 import useExportToExcel from '@/hooks/useExportToExcel';
@@ -12,7 +12,7 @@ import { RootState } from '@/store';
 
 import HeaderBar from './HeaderBar';
 import InputField from './InputField';
-import ResultsTable from './ResultsTable';
+import ResultsTable from '../ResultsTable/ResultsTable';
 import HorizontalBarChart from '../HorizontalBarChart/HorizontalBarChart';
 import BalanceLineChart from '../BalanceLineChart/BalanceLineChart';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
@@ -24,6 +24,7 @@ const LoanSimulator: React.FC = () => {
     const [term, setTerm] = useState<string>('');
     const [addPercentajePayment, setAddPercentajePayment] = useState<string>('');
     const [rateType, setRateType] = useState<string>('TEA'); // State for the rate type
+    const [calculated, setCalculated] = useState<boolean>(false); // State to track if calculation has been done
 
     const { t } = useTranslation();
     const { exportToExcel } = useExportToExcel();
@@ -60,13 +61,24 @@ const LoanSimulator: React.FC = () => {
 
         const calculatedPayments = calculatePayments(amountNumber, monthlyRate, termNumber, addPercentajePaymentNumber);
         dispatch(setPayments(calculatedPayments));
+        setCalculated(true); // Set calculated to true after calculation
     };
+
+    // Reset calculated state when any input changes
+    useEffect(() => {
+        setCalculated(false);
+    }, [amount, interestRate, term, addPercentajePayment, rateType]);
 
     const balanceData = payments.map(payment => ({
         month: payment.month,
         balance: payment.balance,
         altBalance: payment.altBalance ?? 0
     }));
+
+    const totalSavings = totalPayment - totalAltPayment;
+
+    // Find the new term as the month when altBalance becomes 0
+    const newTerm = payments.find(payment => (payment.altBalance ?? 0) <= 0)?.month || payments.length;
 
     return (
         <div className={styles.container}>
@@ -126,20 +138,20 @@ const LoanSimulator: React.FC = () => {
                 </div>
 
                 <div className={styles.half}>
-                    <BalanceLineChart data={balanceData} />
+                    <BalanceLineChart data={balanceData} totalSavings={totalSavings} newTerm={newTerm} />
                 </div>
             </div>
 
-            {totalInterest > 0 && (
+            {calculated && totalInterest > 0 && (
                 <h2>{t('totalInterest')}: {totalInterest.toFixed(2)} {t('totalPayment')}: {totalPayment.toFixed(2)}</h2>
             )}
-            {totalAltInterest > 0 && (
+            {calculated && totalAltInterest > 0 && (
                 <>
                     <h2>{t('newTotalInterest')}: {totalAltInterest.toFixed(2)} {t('newTotalPayment')}: {totalAltPayment.toFixed(2)}</h2>
                 </>
             )}
 
-            {payments.length > 0 && (
+            {calculated && payments.length > 0 && (
                 <>
                     <button className={styles.exportButton} onClick={() => exportToExcel(payments, addPercentajePayment)}>
                         {t('exportToExcel')}

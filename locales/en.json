@@ -26,5 +26,8 @@
     "newBalance": "New Balance",
     "TEA": "Effective Annual Rate (TEA)",
     "TNA": "Nominal Annual Rate (TNA)",
-    "TM": "Monthly Rate (TM)"
+    "TM": "Monthly Rate (TM)",
+    "balanceOverTime": "Balance Over Time",
+    "totalSavings": "Total Savings",
+    "newTerm": "New Term"
 }

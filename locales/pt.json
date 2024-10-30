@@ -26,5 +26,8 @@
     "newBalance": "Novo Saldo",
     "TEA": "Taxa Anual Efetiva Geral (TAEG)",
     "TNA": "Taxa Anual Nominal (TAN)",
-    "TM": "Taxa Mensal (TM)"
+    "TM": "Taxa Mensal (TM)",
+    "balanceOverTime": "Saldo ao Longo do Tempo",
+    "totalSavings": "Poupança Total",
+    "newTerm": "Novo Prazo"
 }

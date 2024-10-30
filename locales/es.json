@@ -26,5 +26,8 @@
     "newBalance": "Nuevo Saldo",
     "TEA": "Tasa Efectiva Anual (TEA)",
     "TNA": "Tasa Nominal Anual (TNA)",
-    "TM": "Tasa Mensual (TM)"
+    "TM": "Tasa Mensual (TM)",
+    "balanceOverTime": "Saldo a lo Largo del Tiempo",
+    "totalSavings": "Ahorro Total",
+    "newTerm": "Nuevo Plazo"
 }
