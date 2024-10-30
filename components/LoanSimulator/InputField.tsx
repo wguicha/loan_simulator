@@ -3,32 +3,20 @@ import { NumericFormat } from 'react-number-format';
 import styles from './LoanSimulator.module.css';
 
 interface InputFieldProps {
-
     id: string;
-
     label: string;
-
     value: string;
-
     onValueChange: (values: any) => void;
-
-    placeholder: string;
-
-    decimalScale?: number;
-
-    suffix?: string;
-
-    prefix?: string;
-
-    fixedDecimalScale?: boolean;
-
-    tooltip?: string;
-
+    placeholder?: string;
     thousandSeparator?: boolean;
-
+    prefix?: string;
+    suffix?: string;
+    decimalScale?: number;
+    fixedDecimalScale?: boolean;
+    tooltip?: string;
     children?: React.ReactNode; // Add this line to include children property
-
 }
+
 const InputField: React.FC<InputFieldProps> = ({
     id,
     label,
@@ -40,7 +28,8 @@ const InputField: React.FC<InputFieldProps> = ({
     suffix = '',
     decimalScale,
     fixedDecimalScale = false,
-    tooltip = '' // Nueva propiedad para el texto explicativo
+    tooltip = '',
+    children
 }) => {
     return (
         <div className={styles.inputContainer}>
@@ -48,18 +37,21 @@ const InputField: React.FC<InputFieldProps> = ({
                 {label}
                 {tooltip && <span className={styles.tooltip}>{tooltip}</span>}
             </label>
-            <NumericFormat
-                id={id}
-                value={value}
-                onValueChange={onValueChange}
-                className={styles.input}
-                placeholder={placeholder}
-                thousandSeparator={thousandSeparator}
-                prefix={prefix}
-                suffix={suffix}
-                decimalScale={decimalScale}
-                fixedDecimalScale={fixedDecimalScale}
-            />
+            {children} {/* Render children here */}
+            <div className={styles.inputWithChildren}>
+                <NumericFormat
+                    id={id}
+                    value={value}
+                    onValueChange={onValueChange}
+                    className={styles.input}
+                    placeholder={placeholder}
+                    thousandSeparator={thousandSeparator}
+                    prefix={prefix}
+                    suffix={suffix}
+                    decimalScale={decimalScale}
+                    fixedDecimalScale={fixedDecimalScale}
+                />
+            </div>
         </div>
     );
 };

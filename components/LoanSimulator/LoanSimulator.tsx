@@ -16,14 +16,14 @@ import ResultsTable from './ResultsTable';
 import HorizontalBarChart from '../HorizontalBarChart/HorizontalBarChart';
 import BalanceLineChart from '../BalanceLineChart/BalanceLineChart';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
-import RateTypeSelector from '../RateTypeSelector/RateTypeSelector'; // Importar el nuevo componente
+import RateTypeSelector from '../RateTypeSelector/RateTypeSelector'; // Import the new component
 
 const LoanSimulator: React.FC = () => {
     const [amount, setAmount] = useState<string>('');
     const [interestRate, setInterestRate] = useState<string>('');
     const [term, setTerm] = useState<string>('');
     const [addPercentajePayment, setAddPercentajePayment] = useState<string>('');
-    const [rateType, setRateType] = useState<string>('TEA'); // Estado para el tipo de tasa
+    const [rateType, setRateType] = useState<string>('TEA'); // State for the rate type
 
     const { t } = useTranslation();
     const { exportToExcel } = useExportToExcel();
@@ -86,6 +86,7 @@ const LoanSimulator: React.FC = () => {
                             onRateTypeChange={setRateType}
                         />
                     </InputField>
+
                     <InputField
                         id="term"
                         label={t('term')}
