@@ -3,19 +3,32 @@ import { NumericFormat } from 'react-number-format';
 import styles from './LoanSimulator.module.css';
 
 interface InputFieldProps {
-    id: string;
-    label: string;
-    value: string;
-    onValueChange: (values: any) => void;
-    placeholder?: string;
-    thousandSeparator?: boolean;
-    prefix?: string;
-    suffix?: string;
-    decimalScale?: number;
-    fixedDecimalScale?: boolean;
-    tooltip?: string; // Nueva propiedad para el texto explicativo
-}
 
+    id: string;
+
+    label: string;
+
+    value: string;
+
+    onValueChange: (values: any) => void;
+
+    placeholder: string;
+
+    decimalScale?: number;
+
+    suffix?: string;
+
+    prefix?: string;
+
+    fixedDecimalScale?: boolean;
+
+    tooltip?: string;
+
+    thousandSeparator?: boolean;
+
+    children?: React.ReactNode; // Add this line to include children property
+
+}
 const InputField: React.FC<InputFieldProps> = ({
     id,
     label,

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -15,12 +15,15 @@ import InputField from './InputField';
 import ResultsTable from './ResultsTable';
 import HorizontalBarChart from '../HorizontalBarChart/HorizontalBarChart';
 import BalanceLineChart from '../BalanceLineChart/BalanceLineChart';
+import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
+import RateTypeSelector from '../RateTypeSelector/RateTypeSelector'; // Importar el nuevo componente
 
 const LoanSimulator: React.FC = () => {
     const [amount, setAmount] = useState<string>('');
     const [interestRate, setInterestRate] = useState<string>('');
     const [term, setTerm] = useState<string>('');
     const [addPercentajePayment, setAddPercentajePayment] = useState<string>('');
+    const [rateType, setRateType] = useState<string>('TEA'); // Estado para el tipo de tasa
 
     const { t } = useTranslation();
     const { exportToExcel } = useExportToExcel();
@@ -53,6 +56,7 @@ const LoanSimulator: React.FC = () => {
     return (
         <div className={styles.container}>
             <HeaderBar title={t('loanSimulator')} />
+            <LanguageSwitcher /> {/* Asegúrate de usar el componente aquí */}
 
             <div className={styles.topContainer}>
                 <div className={styles.half}>
@@ -76,7 +80,12 @@ const LoanSimulator: React.FC = () => {
                         suffix="%"
                         fixedDecimalScale={true}
                         tooltip={t('interestRateTooltip')} // Texto explicativo
-                    />
+                    >
+                        <RateTypeSelector
+                            selectedRateType={rateType}
+                            onRateTypeChange={setRateType}
+                        />
+                    </InputField>
                     <InputField
                         id="term"
                         label={t('term')}

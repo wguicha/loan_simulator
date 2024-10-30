@@ -1,0 +1,12 @@
+/* RateTypeSelector.module.css */
+
+.rateTypeSelector {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.radio {
+    display: flex;
+    align-items: center;
+}
