@@ -24,7 +24,7 @@
     "newInterest": "Novos Juros",
     "newPrincipal": "Novo Principal",
     "newBalance": "Novo Saldo",
-    "TEA": "Taxa Efetiva Anual (TEA)",
-    "TNA": "Taxa Nominal Anual (TNA)",
+    "TEA": "Taxa Anual Efetiva Geral (TAEG)",
+    "TNA": "Taxa Anual Nominal (TAN)",
     "TM": "Taxa Mensal (TM)"
 }

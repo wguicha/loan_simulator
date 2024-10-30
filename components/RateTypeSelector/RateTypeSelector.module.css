@@ -4,9 +4,13 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
+    padding: 5px;
 }
 
 .radio {
     display: flex;
     align-items: center;
+    font-size: 0.8rem;
+    color: #555;
+    font-weight: 300;
 }

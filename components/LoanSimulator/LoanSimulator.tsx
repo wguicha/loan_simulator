@@ -37,13 +37,28 @@ const LoanSimulator: React.FC = () => {
 
     const { calculatePayments } = useLoanCalculator();
 
+    const calculateMonthlyRate = (rate: number, type: string): number => {
+        switch (type) {
+            case 'TEA':
+                return Math.pow(1 + rate / 100, 1 / 12) - 1;
+            case 'TNA':
+                return rate / 12 / 100;
+            case 'TM':
+                return rate / 100;
+            default:
+                return rate / 100;
+        }
+    };
+
     const handleCalculate = () => {
         const amountNumber = parseFloat(amount) || 0;
         const interestRateNumber = parseFloat(interestRate) || 0;
         const termNumber = parseInt(term) || 0;
         const addPercentajePaymentNumber = parseFloat(addPercentajePayment) || 0;
 
-        const calculatedPayments = calculatePayments(amountNumber, interestRateNumber, termNumber, addPercentajePaymentNumber);
+        const monthlyRate = calculateMonthlyRate(interestRateNumber, rateType);
+
+        const calculatedPayments = calculatePayments(amountNumber, monthlyRate, termNumber, addPercentajePaymentNumber);
         dispatch(setPayments(calculatedPayments));
     };
 
@@ -86,7 +101,6 @@ const LoanSimulator: React.FC = () => {
                             onRateTypeChange={setRateType}
                         />
                     </InputField>
-
                     <InputField
                         id="term"
                         label={t('term')}
