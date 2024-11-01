@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import styles from './languageSwitcher.module.css';
 import { useTranslation } from 'react-i18next';
 
@@ -13,21 +14,27 @@ const LanguageSwitcher: React.FC = () => {
 
     return (
         <div className={styles.languageSwitcher}>
-            <img
+            <Image
                 src="/flags/us.png"
                 alt="English"
+                width={24}
+                height={24}
                 className={`${styles.flag} ${currentLanguage === 'en' ? styles.selected : ''}`}
                 onClick={() => changeLanguage('en')}
             />
-            <img
+            <Image
                 src="/flags/es.png"
                 alt="Español"
+                width={24}
+                height={24}
                 className={`${styles.flag} ${currentLanguage === 'es' ? styles.selected : ''}`}
                 onClick={() => changeLanguage('es')}
             />
-            <img
+            <Image
                 src="/flags/pt.png"
                 alt="Portuguese"
+                width={24}
+                height={24}
                 className={`${styles.flag} ${currentLanguage === 'pt' ? styles.selected : ''}`}
                 onClick={() => changeLanguage('pt')}
             />
