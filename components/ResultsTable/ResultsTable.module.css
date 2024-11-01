@@ -30,6 +30,10 @@
     z-index: 2;
 }
 
+.rightAlign {
+    text-align: right;
+}
+
 @media (max-width: 600px) {
 
     .table th,
@@ -38,21 +42,27 @@
         font-size: 0.9em;
     }
 
-    .table th {
-        display: none;
-        /* Hide table headers on small screens */
+    .tableContainer {
+        overflow-x: auto;
     }
 
-    .table td {
-        display: block;
+    .table {
+        display: table;
         width: 100%;
-        box-sizing: border-box;
     }
 
-    .table td::before {
-        content: attr(data-label);
-        font-weight: bold;
-        display: block;
-        margin-bottom: 4px;
+    .table th,
+    .table td {
+        display: table-cell;
+    }
+
+    .table tr {
+        display: table-row;
+    }
+
+    .table thead,
+    .table tbody {
+        display: table-header-group;
+        display: table-row-group;
     }
 }
