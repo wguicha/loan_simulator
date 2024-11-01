@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import ReactPaginate from 'react-paginate';
 import styles from './ResultsTable.module.css';
 
 interface Payment {
@@ -21,6 +22,18 @@ interface ResultsTableProps {
 
 const ResultsTable: React.FC<ResultsTableProps> = ({ payments, addPercentajePayment }) => {
     const { t } = useTranslation();
+    const [currentPage, setCurrentPage] = useState(0);
+    const paymentsPerPage = 20;
+
+    // Calculate the current payments to display
+    const indexOfLastPayment = (currentPage + 1) * paymentsPerPage;
+    const indexOfFirstPayment = indexOfLastPayment - paymentsPerPage;
+    const currentPayments = payments.slice(indexOfFirstPayment, indexOfLastPayment);
+
+    // Change page
+    const handlePageClick = (data: { selected: number }) => {
+        setCurrentPage(data.selected);
+    };
 
     const formatCurrency = (value: number) => {
         return new Intl.NumberFormat('en-US', {
@@ -46,7 +59,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ payments, addPercentajePaym
                     </tr>
                 </thead>
                 <tbody>
-                    {payments.map((payment, index) => (
+                    {currentPayments.map((payment, index) => (
                         <tr key={index}>
                             <td data-label={t('month')}>{payment.month}</td>
                             <td data-label={t('payment')} className={styles.rightAlign}>{formatCurrency(payment.payment)}</td>
@@ -61,6 +74,18 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ payments, addPercentajePaym
                     ))}
                 </tbody>
             </table>
+            <ReactPaginate
+                previousLabel={'previous'}
+                nextLabel={'next'}
+                breakLabel={'...'}
+                breakClassName={'break-me'}
+                pageCount={Math.ceil(payments.length / paymentsPerPage)}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={handlePageClick}
+                containerClassName={styles.pagination}
+                activeClassName={styles.active}
+            />
         </div>
     );
 };
