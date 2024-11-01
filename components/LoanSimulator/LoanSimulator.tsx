@@ -13,7 +13,6 @@ import { RootState } from '@/store';
 import HeaderBar from './HeaderBar';
 import InputField from './InputField';
 import ResultsTable from '../ResultsTable/ResultsTable';
-import HorizontalBarChart from '../HorizontalBarChart/HorizontalBarChart';
 import BalanceLineChart from '../BalanceLineChart/BalanceLineChart';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 import RateTypeSelector from '../RateTypeSelector/RateTypeSelector'; // Import the new component

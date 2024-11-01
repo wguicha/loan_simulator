@@ -1,12 +1,12 @@
 import React from 'react';
-import { NumericFormat } from 'react-number-format';
+import { NumericFormat, NumberFormatValues } from 'react-number-format';
 import styles from './LoanSimulator.module.css';
 
 interface InputFieldProps {
     id: string;
     label: string;
     value: string;
-    onValueChange: (values: any) => void;
+    onValueChange: (values: NumberFormatValues) => void;
     placeholder?: string;
     thousandSeparator?: boolean;
     prefix?: string;
@@ -14,7 +14,7 @@ interface InputFieldProps {
     decimalScale?: number;
     fixedDecimalScale?: boolean;
     tooltip?: string;
-    children?: React.ReactNode; // Add this line to include children property
+    children?: React.ReactNode;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -28,30 +28,28 @@ const InputField: React.FC<InputFieldProps> = ({
     suffix = '',
     decimalScale,
     fixedDecimalScale = false,
-    tooltip = '',
+    tooltip,
     children
 }) => {
     return (
-        <div className={styles.inputContainer}>
+        <div className={styles.inputField}>
             <label htmlFor={id} className={styles.label}>
                 {label}
                 {tooltip && <span className={styles.tooltip}>{tooltip}</span>}
             </label>
-            {children} {/* Render children here */}
-            <div className={styles.inputWithChildren}>
-                <NumericFormat
-                    id={id}
-                    value={value}
-                    onValueChange={onValueChange}
-                    className={styles.input}
-                    placeholder={placeholder}
-                    thousandSeparator={thousandSeparator}
-                    prefix={prefix}
-                    suffix={suffix}
-                    decimalScale={decimalScale}
-                    fixedDecimalScale={fixedDecimalScale}
-                />
-            </div>
+            <NumericFormat
+                id={id}
+                value={value}
+                onValueChange={onValueChange}
+                placeholder={placeholder}
+                thousandSeparator={thousandSeparator}
+                prefix={prefix}
+                suffix={suffix}
+                decimalScale={decimalScale}
+                fixedDecimalScale={fixedDecimalScale}
+                className={styles.input}
+            />
+            {children}
         </div>
     );
 };
