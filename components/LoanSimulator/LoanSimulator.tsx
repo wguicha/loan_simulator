@@ -74,10 +74,10 @@ const LoanSimulator: React.FC = () => {
         altBalance: payment.altBalance ?? 0
     }));
 
-    const totalSavings = totalPayment - totalAltPayment;
+    const totalSavings = totalAltPayment > 0 && calculated ? totalPayment - totalAltPayment : 0;
 
     // Find the new term as the month when altBalance becomes 0
-    const newTerm = payments.find(payment => (payment.altBalance ?? 0) <= 0)?.month || payments.length;
+    const newTerm = addPercentajePayment !== '' && calculated ? payments.find(payment => (payment.altBalance ?? 0) <= 0)?.month ?? 0 : 0;
 
     return (
         <div className={styles.container}>
