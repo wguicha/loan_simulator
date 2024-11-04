@@ -12,19 +12,28 @@ interface BalanceLineChartProps {
 const BalanceLineChart: React.FC<BalanceLineChartProps> = ({ data, totalSavings, newTerm }) => {
     const { t } = useTranslation();
 
+    const formatCurrency = (value: number) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+        }).format(value);
+    };
+
     return (
         <div>
             <h2>{t('balanceOverTime')}</h2>
             <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 60 }}>
+                <LineChart data={data} margin={{ top: 5, right: 30, left: 50, bottom: 60 }}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="month">
-                        <Label value={t('month')} offset={-5} position="insideBottom" />
+                    <XAxis dataKey="month" tick={{ fontSize: 12 }}>
+                        <Label value={t('month')} offset={-5} position="insideBottom" style={{ fontSize: 12 }} />
                     </XAxis>
-                    <YAxis>
-                        <Label value={t('balance')} angle={-90} position="insideLeft" style={{ textAnchor: 'middle' }} />
+                    <YAxis tickFormatter={formatCurrency} tick={{ fontSize: 12 }}>
+                        <Label value={t('balance')} angle={-90} position="insideLeft" offset={-20} style={{ textAnchor: 'middle', fontSize: 12 }} />
                     </YAxis>
-                    <Tooltip />
+                    <Tooltip formatter={formatCurrency} />
                     <Legend verticalAlign="top" height={36} /> {/* Move legend to the top */}
                     <Line type="monotone" dataKey="balance" stroke="#FF5733" dot={false} name={t('balance')} /> {/* Custom color for balance line */}
                     <Line type="monotone" dataKey="altBalance" stroke="#33FF57" dot={false} name={t('newBalance')} /> {/* Custom color for altBalance line */}
@@ -33,7 +42,7 @@ const BalanceLineChart: React.FC<BalanceLineChartProps> = ({ data, totalSavings,
             {totalSavings > 0 && (
                 <div className={styles.savingsIndicator}>
                     <div className={styles.savingsLabel}>{t('totalSavings')}</div>
-                    <div className={styles.savingsValue}>${totalSavings.toFixed(2)}</div>
+                    <div className={styles.savingsValue}>{formatCurrency(totalSavings)}</div>
                 </div>
             )}
             {newTerm > 0 && (
@@ -45,5 +54,6 @@ const BalanceLineChart: React.FC<BalanceLineChartProps> = ({ data, totalSavings,
         </div>
     );
 };
+
 
 export default BalanceLineChart;
