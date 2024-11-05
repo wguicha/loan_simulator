@@ -1,15 +1,17 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLoanCalculator } from '@/hooks/useLoanCalculator';
 import useExportToExcel from '@/hooks/useExportToExcel';
 import styles from './LoanSimulator.module.css';
+import Image from 'next/image';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setPayments } from '@/store/loanSlice';
 import { RootState } from '@/store';
 
+import TopBar from '../TopBar/TopBar';
 import HeaderBar from './HeaderBar';
 import InputField from './InputField';
 import ResultsTable from '../ResultsTable/ResultsTable';
@@ -37,7 +39,7 @@ const LoanSimulator: React.FC = () => {
 
     const { calculatePayments } = useLoanCalculator();
 
-    const calculateMonthlyRate = (rate: number, type: string): number => {
+    const calculateMonthlyRate = useCallback((rate: number, type: string): number => {
         switch (type) {
             case 'TEA':
                 return Math.pow(1 + rate / 100, 1 / 12) - 1;
@@ -48,9 +50,9 @@ const LoanSimulator: React.FC = () => {
             default:
                 return rate / 100;
         }
-    };
+    }, []);
 
-    const handleCalculate = () => {
+    const handleCalculate = useCallback(() => {
         const amountNumber = parseFloat(amount) || 0;
         const interestRateNumber = parseFloat(interestRate) || 0;
         const termNumber = parseInt(term) || 0;
@@ -61,26 +63,27 @@ const LoanSimulator: React.FC = () => {
         const calculatedPayments = calculatePayments(amountNumber, monthlyRate, termNumber, addPercentajePaymentNumber);
         dispatch(setPayments(calculatedPayments));
         setCalculated(true); // Set calculated to true after calculation
-    };
+    }, [amount, interestRate, term, addPercentajePayment, rateType, calculateMonthlyRate, calculatePayments, dispatch]);
 
     // Reset calculated state when any input changes
     useEffect(() => {
         setCalculated(false);
     }, [amount, interestRate, term, addPercentajePayment, rateType]);
 
-    const balanceData = payments.map(payment => ({
+    const balanceData = useMemo(() => payments.map(payment => ({
         month: payment.month,
         balance: payment.balance,
         altBalance: payment.altBalance ?? 0
-    }));
+    })), [payments]);
 
-    const totalSavings = totalAltPayment > 0 && calculated ? totalPayment - totalAltPayment : 0;
+    const totalSavings = useMemo(() => totalAltPayment > 0 && calculated ? totalPayment - totalAltPayment : 0, [totalAltPayment, calculated, totalPayment]);
 
     // Find the new term as the month when altBalance becomes 0
-    const newTerm = addPercentajePayment !== '' && calculated ? payments.find(payment => (payment.altBalance ?? 0) <= 0)?.month ?? 0 : 0;
+    const newTerm = useMemo(() => addPercentajePayment !== '' && calculated ? payments.find(payment => (payment.altBalance ?? 0) <= 0)?.month ?? 0 : 0, [addPercentajePayment, calculated, payments]);
 
     return (
         <div className={styles.container}>
+            <TopBar /> {/* Add the TopBar component */}
             <HeaderBar title={t('loanSimulator')} />
             <LanguageSwitcher /> {/* Asegúrate de usar el componente aquí */}
 
@@ -137,7 +140,11 @@ const LoanSimulator: React.FC = () => {
                 </div>
 
                 <div className={styles.half}>
-                    <BalanceLineChart data={balanceData} totalSavings={totalSavings} newTerm={newTerm} />
+                    {calculated ? (
+                        <BalanceLineChart data={balanceData} totalSavings={totalSavings} newTerm={newTerm} />
+                    ) : (
+                        <Image src="/debtcut.png" alt="Debt Cut" width={500} height={300} />
+                    )}
                 </div>
             </div>
 
