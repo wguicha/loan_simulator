@@ -11,13 +11,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setPayments } from '@/store/loanSlice';
 import { RootState } from '@/store';
 
-import TopBar from '../TopBar/TopBar';
-import HeaderBar from './HeaderBar';
+import HeaderBar from '../HeaderBar/HeaderBar';
 import InputField from './InputField';
 import ResultsTable from '../ResultsTable/ResultsTable';
 import BalanceLineChart from '../BalanceLineChart/BalanceLineChart';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 import RateTypeSelector from '../RateTypeSelector/RateTypeSelector'; // Import the new component
+import TopBar from '../TopBar/TopBar'; // Import the TopBar component
 
 const LoanSimulator: React.FC = () => {
     const [amount, setAmount] = useState<string>('');

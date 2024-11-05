@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './LoanSimulator.module.css';
+import styles from '../LoanSimulator/LoanSimulator.module.css';
 import LanguageSwitcher from '@/components/LanguageSwitcher/LanguageSwitcher';
 
 interface HeaderBarProps {

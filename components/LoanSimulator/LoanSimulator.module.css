@@ -8,28 +8,29 @@
     width: 100%;
     justify-content: space-between;
     margin-bottom: 20px;
+    margin-top: 60px;
+    /* Ajusta este valor según la altura del TopBar */
+    padding: 20px;
 }
 
 /* Barra fija */
 .header {
     display: flex;
     justify-content: space-between;
-    /* Alinea los elementos a los extremos */
     align-items: center;
     position: fixed;
-    /* Hace que la barra quede fija */
     top: 0;
     left: 0;
     right: 0;
-    background-color: white;
-    /* Fondo blanco para la barra */
-    padding: 10px 20px;
+    background-color: #f8f9fa;
+    padding: 10px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    /* Sombra para la barra */
     z-index: 1000;
-    /* Asegura que la barra esté por encima de otros elementos */
     width: 100%;
-    /* Asegura que la barra ocupe todo el ancho */
+    margin-top: 50px;
+    /* Ajusta este valor según sea necesario */
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
 }
 
 /* Contenedor superior dividido en dos mitades */
