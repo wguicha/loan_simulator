@@ -1,7 +1,8 @@
 .topBar {
-    background-color: #0070f3;
+    background-color: #143B58;
     /* Color diferenciado */
-    color: white;
+    color: #FFD700;
+    /* Color dorado para el texto */
     padding: 10px 20px;
     text-align: right;
     /* Alinear el texto a la derecha */

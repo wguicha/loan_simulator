@@ -1,6 +1,6 @@
 'use client';
 
-import "./globals.css";
+import "../styles/globals.css";
 
 import { Provider } from 'react-redux';
 import { store } from '@/store';
@@ -14,6 +14,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body>
         <Provider store={store}>
           {/* Envuelve la app con I18nextProvider */}

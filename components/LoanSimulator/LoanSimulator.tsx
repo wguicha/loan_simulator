@@ -15,7 +15,6 @@ import HeaderBar from '../HeaderBar/HeaderBar';
 import InputField from './InputField';
 import ResultsTable from '../ResultsTable/ResultsTable';
 import BalanceLineChart from '../BalanceLineChart/BalanceLineChart';
-import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 import RateTypeSelector from '../RateTypeSelector/RateTypeSelector'; // Import the new component
 import TopBar from '../TopBar/TopBar'; // Import the TopBar component
 
@@ -85,7 +84,6 @@ const LoanSimulator: React.FC = () => {
         <div className={styles.container}>
             <TopBar /> {/* Add the TopBar component */}
             <HeaderBar title={t('loanSimulator')} />
-            <LanguageSwitcher /> {/* Asegúrate de usar el componente aquí */}
 
             <div className={styles.topContainer}>
                 <div className={styles.half}>

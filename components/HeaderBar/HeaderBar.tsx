@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../LoanSimulator/LoanSimulator.module.css';
+import styles from './HeaderBar.module.css';
 import LanguageSwitcher from '@/components/LanguageSwitcher/LanguageSwitcher';
 
 interface HeaderBarProps {
@@ -10,7 +10,9 @@ const HeaderBar: React.FC<HeaderBarProps> = ({ title }) => {
     return (
         <div className={styles.header}>
             <h1 className={styles.title}>{title}</h1>
-            <LanguageSwitcher />
+            <div className={styles.languageSwitcher}>
+                <LanguageSwitcher />
+            </div>
         </div>
     );
 };

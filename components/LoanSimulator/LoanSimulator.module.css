@@ -15,22 +15,20 @@
 
 /* Barra fija */
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: #f8f9fa;
-    padding: 10px 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    width: 100%;
-    margin-top: 50px;
-    /* Ajusta este valor según sea necesario */
+    background-color: #F0F0F0;
+    /* Color claro que contrasta con #143B58 */
+    color: #143B58;
+    /* Color del texto que contrasta con el fondo claro */
+    padding: 10px 20px;
     text-align: center;
-    border-bottom: 1px solid #dee2e6;
+    font-size: 18px;
+    position: fixed;
+    top: 50px;
+    /* Ajusta este valor si es necesario para evitar superposición con la TopBar */
+    width: 100%;
+    z-index: 999;
+    /* Asegúrate de que esté por debajo de la TopBar */
+    border-bottom: 1px solid #ddd;
 }
 
 /* Contenedor superior dividido en dos mitades */
