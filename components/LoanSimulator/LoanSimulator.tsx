@@ -15,7 +15,6 @@ import HeaderBar from '../HeaderBar/HeaderBar';
 import InputField from './InputField';
 import ResultsTable from '../ResultsTable/ResultsTable';
 import BalanceLineChart from '../BalanceLineChart/BalanceLineChart';
-import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 import RateTypeSelector from '../RateTypeSelector/RateTypeSelector'; // Import the new component
 import TopBar from '../TopBar/TopBar'; // Import the TopBar component
 import Footer from '../Footer/Footer'; // Import the Footer component
