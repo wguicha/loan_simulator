@@ -1,0 +1,24 @@
+.footer {
+    background-color: #143B58;
+    /* Mismo color que la TopBar */
+    color: #FFD700;
+    /* Color dorado para el texto */
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 14px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000;
+    /* Asegúrate de que esté por encima de otros elementos */
+}
+
+.footer a {
+    color: #FFD700;
+    /* Asegúrate de que el enlace tenga el mismo color que el texto */
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}

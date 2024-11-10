@@ -9,7 +9,7 @@
     align-items: center;
     font-size: 18px;
     position: fixed;
-    top: 39px;
+    top: 40px;
     /* Ajusta este valor para que esté justo debajo de la TopBar */
     width: 100%;
     z-index: 999;
@@ -19,6 +19,8 @@
 
 .title {
     margin: 0;
+    font-size: 1.2rem;
+    /* Ajusta este valor para hacer el texto más pequeño */
 }
 
 .languageSwitcher {

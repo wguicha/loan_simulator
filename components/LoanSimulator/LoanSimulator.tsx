@@ -15,8 +15,10 @@ import HeaderBar from '../HeaderBar/HeaderBar';
 import InputField from './InputField';
 import ResultsTable from '../ResultsTable/ResultsTable';
 import BalanceLineChart from '../BalanceLineChart/BalanceLineChart';
+import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 import RateTypeSelector from '../RateTypeSelector/RateTypeSelector'; // Import the new component
 import TopBar from '../TopBar/TopBar'; // Import the TopBar component
+import Footer from '../Footer/Footer'; // Import the Footer component
 
 const LoanSimulator: React.FC = () => {
     const [amount, setAmount] = useState<string>('');
@@ -141,7 +143,9 @@ const LoanSimulator: React.FC = () => {
                     {calculated ? (
                         <BalanceLineChart data={balanceData} totalSavings={totalSavings} newTerm={newTerm} />
                     ) : (
-                        <Image src="/debtcut.png" alt="Debt Cut" width={500} height={300} />
+                        <div className={styles.imageContainer}>
+                            <Image src="/debtcut.png" alt="Debt Cut" width={500} height={300} />
+                        </div>
                     )}
                 </div>
             </div>
@@ -166,6 +170,7 @@ const LoanSimulator: React.FC = () => {
                     />
                 </>
             )}
+            <Footer /> {/* Add the Footer component */}
         </div>
     );
 };

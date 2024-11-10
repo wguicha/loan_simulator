@@ -196,4 +196,8 @@
     .td {
         font-size: 14px;
     }
+
+    .imageContainer {
+        display: none;
+    }
 }
