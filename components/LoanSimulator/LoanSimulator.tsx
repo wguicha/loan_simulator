@@ -149,14 +149,14 @@ const LoanSimulator: React.FC = () => {
                 </div>
             </div>
 
-            {calculated && totalInterest > 0 && (
+            {/*calculated && totalInterest > 0 && (
                 <h2>{t('totalInterest')}: {totalInterest.toFixed(2)} {t('totalPayment')}: {totalPayment.toFixed(2)}</h2>
             )}
             {calculated && totalAltInterest > 0 && (
                 <>
                     <h2>{t('newTotalInterest')}: {totalAltInterest.toFixed(2)} {t('newTotalPayment')}: {totalAltPayment.toFixed(2)}</h2>
                 </>
-            )}
+            )*/}
 
             {calculated && payments.length > 0 && (
                 <>
