@@ -31,8 +31,8 @@ const LoanSimulator: React.FC = () => {
     const { exportToExcel } = useExportToExcel();
 
     const dispatch = useDispatch();
-    const totalInterest = useSelector((state: RootState) => state.loan.totalInterest);
-    const totalAltInterest = useSelector((state: RootState) => state.loan.totalAltInterest);
+    //const totalInterest = useSelector((state: RootState) => state.loan.totalInterest);
+    //const totalAltInterest = useSelector((state: RootState) => state.loan.totalAltInterest);
     const totalPayment = useSelector((state: RootState) => state.loan.totalPayment);
     const totalAltPayment = useSelector((state: RootState) => state.loan.totalAltPayment);
     const payments = useSelector((state: RootState) => state.loan.payments);
