@@ -1,7 +1,8 @@
 {
-    "title": "Simulador de Empréstimos - Calcule suas Economias",
+    "title": "Simulador de Empréstimos - Calcule seu Fluxo de Caixa",
     "loanSimulator": "Simulador de Empréstimos",
-    "loanAmount": "Montante do Empréstimo",
+    "appDescriptionTitle": "Como Funciona?",
+    "appDescription": "Este aplicativo ajuda você a calcular seus pagamentos de empréstimo e amortização inserindo o valor do empréstimo, a taxa de juros (anual ou mensal) e o prazo. Além disso, permite simular o que aconteceria se você pudesse aumentar sua parcela em uma determinada porcentagem, mostrando a economia de juros e o novo prazo de pagamento.",
     "loanAmountTooltip": "Insira o montante total do empréstimo.",
     "interestRate": "Taxa de Juros",
     "interestRateTooltip": "Selecione o tipo de taxa de juros e insira o valor da taxa.",
@@ -33,5 +34,6 @@
     "newTerm": "Novo Prazo",
     "dareToBeFinanciallyDifferent": "Ouse ser financeiramente diferente",
     "contact": "Contato",
-    "phone": "Telefone"
+    "phone": "Telefone",
+    "errorInvalidInput": "O valor do empréstimo e o prazo devem ser maiores que 0."
 }

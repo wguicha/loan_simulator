@@ -1,6 +1,8 @@
 {
-    "title": "Simulador de Préstamos - Calcula tus Ahorros",
+    "title": "Simulador de Préstamos - Calcula tu Flujo de Caja",
     "loanSimulator": "Simulador de Préstamos",
+    "appDescriptionTitle": "¿Cómo Funciona?",
+    "appDescription": "Esta aplicación te ayuda a calcular tus pagos del préstamo y la amortización ingresando el monto del préstamo, la tasa de interés ya sea anual o mensual y el plazo. Además tiene la posibilidad de simular que pasaria si puede aumentar su cuota un determinado porcentaje mostrando el ahorro en interés y el nuevo termino de pago.",
     "loanAmount": "Monto del Préstamo",
     "loanAmountTooltip": "Ingrese el monto total del préstamo.",
     "interestRate": "Tasa de Interés",
@@ -33,5 +35,6 @@
     "newTerm": "Nuevo Plazo",
     "dareToBeFinanciallyDifferent": "Atrévete a ser financieramente diferente",
     "contact": "Contacto",
-    "phone": "Teléfono"
+    "phone": "Teléfono",
+    "errorInvalidInput": "El monto del préstamo y el plazo deben ser mayores a 0."
 }

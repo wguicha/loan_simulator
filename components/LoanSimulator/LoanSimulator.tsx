@@ -15,6 +15,7 @@ import HeaderBar from '../HeaderBar/HeaderBar';
 import InputField from './InputField';
 import ResultsTable from '../ResultsTable/ResultsTable';
 import BalanceLineChart from '../BalanceLineChart/BalanceLineChart';
+import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 import RateTypeSelector from '../RateTypeSelector/RateTypeSelector'; // Import the new component
 import TopBar from '../TopBar/TopBar'; // Import the TopBar component
 import Footer from '../Footer/Footer'; // Import the Footer component
@@ -26,13 +27,12 @@ const LoanSimulator: React.FC = () => {
     const [addPercentajePayment, setAddPercentajePayment] = useState<string>('');
     const [rateType, setRateType] = useState<string>('TEA'); // State for the rate type
     const [calculated, setCalculated] = useState<boolean>(false); // State to track if calculation has been done
+    const [error, setError] = useState<string>(''); // State for error messages
 
     const { t } = useTranslation();
     const { exportToExcel } = useExportToExcel();
 
     const dispatch = useDispatch();
-    //const totalInterest = useSelector((state: RootState) => state.loan.totalInterest);
-    //const totalAltInterest = useSelector((state: RootState) => state.loan.totalAltInterest);
     const totalPayment = useSelector((state: RootState) => state.loan.totalPayment);
     const totalAltPayment = useSelector((state: RootState) => state.loan.totalAltPayment);
     const payments = useSelector((state: RootState) => state.loan.payments);
@@ -40,6 +40,8 @@ const LoanSimulator: React.FC = () => {
     const { calculatePayments } = useLoanCalculator();
 
     const calculateMonthlyRate = useCallback((rate: number, type: string): number => {
+        if (rate === 0) return 0; // Retornar 0 si la tasa de interés es 0
+
         switch (type) {
             case 'TEA':
                 return Math.pow(1 + rate / 100, 1 / 12) - 1;
@@ -54,8 +56,15 @@ const LoanSimulator: React.FC = () => {
 
     const handleCalculate = useCallback(() => {
         const amountNumber = parseFloat(amount) || 0;
-        const interestRateNumber = parseFloat(interestRate) || 0;
         const termNumber = parseInt(term) || 0;
+
+        // Validar que el monto del préstamo y el término sean mayores a 0
+        if (amountNumber <= 0 || termNumber <= 0) {
+            setError(t('errorInvalidInput'));
+            return;
+        }
+
+        const interestRateNumber = parseFloat(interestRate) || 0;
         const addPercentajePaymentNumber = parseFloat(addPercentajePayment) || 0;
 
         const monthlyRate = calculateMonthlyRate(interestRateNumber, rateType);
@@ -63,7 +72,8 @@ const LoanSimulator: React.FC = () => {
         const calculatedPayments = calculatePayments(amountNumber, monthlyRate, termNumber, addPercentajePaymentNumber);
         dispatch(setPayments(calculatedPayments));
         setCalculated(true); // Set calculated to true after calculation
-    }, [amount, interestRate, term, addPercentajePayment, rateType, calculateMonthlyRate, calculatePayments, dispatch]);
+        setError(''); // Clear error message
+    }, [amount, interestRate, term, addPercentajePayment, rateType, calculateMonthlyRate, calculatePayments, dispatch, t]);
 
     // Reset calculated state when any input changes
     useEffect(() => {
@@ -88,6 +98,12 @@ const LoanSimulator: React.FC = () => {
 
             <div className={styles.topContainer}>
                 <div className={styles.half}>
+                    {/* Descripción del funcionamiento de la aplicación */}
+                    <div className={styles.description}>
+                        <h2>{t('appDescriptionTitle')}</h2>
+                        <p>{t('appDescription')}</p>
+                    </div>
+                    {error && <div className={styles.error}>{error}</div>} {/* Mostrar mensaje de error si existe */}
                     <InputField
                         id="loanAmount"
                         label={t('loanAmount')}
@@ -148,15 +164,6 @@ const LoanSimulator: React.FC = () => {
                     )}
                 </div>
             </div>
-
-            {/*calculated && totalInterest > 0 && (
-                <h2>{t('totalInterest')}: {totalInterest.toFixed(2)} {t('totalPayment')}: {totalPayment.toFixed(2)}</h2>
-            )}
-            {calculated && totalAltInterest > 0 && (
-                <>
-                    <h2>{t('newTotalInterest')}: {totalAltInterest.toFixed(2)} {t('newTotalPayment')}: {totalAltPayment.toFixed(2)}</h2>
-                </>
-            )*/}
 
             {calculated && payments.length > 0 && (
                 <>

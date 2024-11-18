@@ -1,6 +1,8 @@
 {
-    "title": "Loan Simulator - Calculate Your Savings",
+    "title": "Loan Simulator - Calculate Your cash flow",
     "loanSimulator": "Loan Simulator",
+    "appDescriptionTitle": "How It Works?",
+    "appDescription": "This application helps you calculate your loan payments and amortization by entering the loan amount, the interest rate (either annual or monthly), and the term. Additionally, it allows you to simulate what would happen if you could increase your payment by a certain percentage, showing the interest savings and the new payment term.",
     "loanAmount": "Loan Amount",
     "loanAmountTooltip": "Enter the total amount of the loan.",
     "interestRate": "Interest Rate",
@@ -33,5 +35,6 @@
     "newTerm": "New Term",
     "dareToBeFinanciallyDifferent": "Dare to be financially different",
     "contact": "Contact",
-    "phone": "Phone"
+    "phone": "Phone",
+    "errorInvalidInput": "The loan amount and term must be greater than 0."
 }

@@ -1,14 +1,11 @@
 import { useState } from 'react';
 
-interface Payment {
+export interface Payment {
     month: number;
     payment: number;
     principal: number;
     interest: number;
     balance: number;
-    altPayment?: number;
-    altPrincipal?: number;
-    altInterest?: number;
     altBalance?: number;
 }
 
@@ -19,54 +16,35 @@ export const useLoanCalculator = () => {
     const calculatePayments = (amount: number, interestRate: number, term: number, addPercentajePayment: number): Payment[] => {
         const r = interestRate; // Tasa de interés mensual
         const n = term; // Número de meses
-        const monthlyPayment = amount * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1); // Fórmula de pago mensual
+        const monthlyPayment = r === 0 ? amount / n : amount * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1); // Fórmula de pago mensual
         let balance = amount;
         let altBalance = amount;
 
         const paymentSchedule: Payment[] = [];
 
         for (let i = 1; i <= n; i++) {
-            const interest = balance * r;
-            const principal = monthlyPayment - interest;
-            balance -= principal;
+            const interestPayment = r === 0 ? 0 : balance * r;
+            const principalPayment = monthlyPayment - interestPayment;
+            balance -= principalPayment;
 
-            if (addPercentajePayment > 0) {
-                let altPayment = monthlyPayment * (1 + addPercentajePayment / 100);
-                if (altBalance * (1 + r) < altPayment) {
-                    altPayment = altBalance * (1 + r);
-                }
-                const altInterest = altBalance * r;
-                const altPrincipal = altPayment - altInterest;
-                altBalance -= altPrincipal;
+            const altInterestPayment = r === 0 ? 0 : altBalance * r;
+            const altPrincipalPayment = monthlyPayment + (monthlyPayment * addPercentajePayment / 100) - altInterestPayment;
+            altBalance -= altPrincipalPayment;
 
-                paymentSchedule.push({
-                    month: i,
-                    payment: monthlyPayment,
-                    principal: principal,
-                    interest: interest,
-                    balance: balance > 0 ? balance : 0,
-                    altPayment: altPayment,
-                    altPrincipal: altPrincipal,
-                    altInterest: altInterest,
-                    altBalance: altBalance > 0 ? altBalance : 0,
-                });
-            } else {
-                paymentSchedule.push({
-                    month: i,
-                    payment: monthlyPayment,
-                    principal: principal,
-                    interest: interest,
-                    balance: balance > 0 ? balance : 0,
-                });
-            }
+            paymentSchedule.push({
+                month: i,
+                payment: monthlyPayment,
+                principal: principalPayment,
+                interest: interestPayment,
+                balance: balance,
+                altBalance: altBalance > 0 ? altBalance : 0,
+            });
 
-            if (altBalance <= 0) {
-                addPercentajePayment = 0;
-            }
+            if (altBalance <= 0) break;
         }
 
-        setPayments(paymentSchedule); // Actualiza el estado
-        return paymentSchedule; // Devuelve el array de pagos
+        setPayments(paymentSchedule);
+        return paymentSchedule;
     };
 
     return { payments, calculatePayments };

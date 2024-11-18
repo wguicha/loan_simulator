@@ -7,7 +7,7 @@ const nextConfig = {
         defaultLocale: 'en',
     },
     images: {
-        domains: ['yourdomain.com'], // Reemplaza 'yourdomain.com' con tu dominio si usas imágenes externas
+        domains: ['loanprojections.com'], // Reemplaza 'yourdomain.com' con tu dominio si usas imágenes externas
     },
     webpack: (config, { isServer }) => {
         // Configuración adicional de Webpack si es necesario

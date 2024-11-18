@@ -47,6 +47,28 @@
     padding: 10px;
 }
 
+.description {
+    border-radius: 15px;
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    color: #ffffff;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.description h2 {
+    margin-top: 0;
+}
+
+.description p {
+    margin-bottom: 0;
+}
+
+.error {
+    color: red;
+    margin-bottom: 10px;
+}
+
 /* Contenedor de entrada */
 .inputContainer {
     position: relative;
