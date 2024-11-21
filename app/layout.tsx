@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { store } from '@/store';
 import { I18nextProvider, useTranslation } from 'react-i18next';
 import i18n from '@/i18n';
+import { Analytics } from "@vercel/analytics/react"
 
 export default function RootLayout({
   children,
@@ -27,6 +28,7 @@ export default function RootLayout({
         <Provider store={store}>
           <I18nextProvider i18n={i18n}>
             {children}
+            <Analytics />
           </I18nextProvider>
         </Provider>
       </body>
